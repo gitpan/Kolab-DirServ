@@ -26,7 +26,7 @@ our @EXPORT = qw(
 );
 
 # Preloaded methods go here.
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 use Kolab::DirServ::Config;
 use Kolab::Config;
 use Kolab::Util;
