@@ -1,0 +1,42 @@
+Kolab/DirServ version 0.01
+=============-============
+
+The Kolab::DirServ module provides a mechanism for Kolab servers to
+publish address book data to a list of peers. These peers recieve
+notification of new, updated and removed mailboxes and update their
+address books accordingly.
+  
+INSTALLATION
+
+To install this module type the following:
+
+   perl Makefile.PL
+   make
+   make test
+   make install
+
+DEPENDENCIES
+
+This module requires these other modules and libraries:
+
+  Kolab::DirServ::Config
+  Kolab::Config
+  Kolab::Util
+  MIME::Entity
+  MIME::Parser
+  MIME::Body
+  Net::LDAP
+  Net::LDAP::LDIF
+  Net::LDAP::Entry
+  Mail::IMAPClient
+  URI
+  IO::File
+  POSIX 
+
+COPYRIGHT AND LICENCE
+
+Copyright 2003 by Stephan Buys
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself. 
+
