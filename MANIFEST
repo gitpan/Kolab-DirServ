@@ -1,7 +1,7 @@
 Changes
-DirServ.pm
 Makefile.PL
 MANIFEST
 README
-t/1.t
+t/Kolab-DirServ.t
+lib/Kolab/DirServ.pm
 META.yml                                 Module meta-data (added by MakeMaker)

@@ -1,19 +1,12 @@
-use 5.008;
+use 5.008003;
 use ExtUtils::MakeMaker;
 # See lib/ExtUtils/MakeMaker.pm for details of how to influence
 # the contents of the Makefile that is written.
 WriteMakefile(
-    'NAME'		=> 'Kolab::DirServ',
-    'VERSION_FROM'	=> 'DirServ.pm', # finds $VERSION
-    'PREREQ_PM'		=> {
-#     'Kolab'                  => '>0.9',
-#     'Kolab::DirServ::Config' => '>=0.9',
-#     'Kolab::Util'            => '>0.9',
-#     'MIME::Entity'           => '0',
-#     'Mail::IMAPClient'       => '0',
-#     'URI'                    => '0',
-    }, # e.g., Module::Name => 1.1
-    ($] >= 5.005 ?    ## Add these new keywords supported since 5.005
-      (ABSTRACT_FROM => 'DirServ.pm', # retrieve abstract from module
-       AUTHOR     => 'root <root@(none)>') : ()),
+    NAME              => 'Kolab::DirServ',
+    VERSION_FROM      => 'lib/Kolab/DirServ.pm', # finds $VERSION
+    PREREQ_PM         => {}, # e.g., Module::Name => 1.1
+    ($] >= 5.005 ?     ## Add these new keywords supported since 5.005
+      (ABSTRACT_FROM  => 'lib/Kolab/DirServ.pm', # retrieve abstract from module
+       AUTHOR         => 'A. U. Thor <stuartb@echo.codefusion.co.za>') : ()),
 );

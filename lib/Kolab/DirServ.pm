@@ -58,7 +58,7 @@ our @EXPORT_OK = ( @{ $EXPORT_TAGS{'all'} } );
 our @EXPORT = qw(
 );
 
-our $VERSION = '0.9';
+our $VERSION = sprintf('%d.%02d', q$Revision: 1.1.1.1 $ =~ /(\d+)\.(\d+)/);
 
 sub reloadPeers
 {
@@ -84,7 +84,7 @@ sub genericRequest
     $entry->delete('uid');
     $entry->delete($Kolab::config{'user_field_guid'});
     $entry->delete($Kolab::config{'user_field_modified'});
-    
+
     $entry->add(
         'objectClass'   => 'kolabPerson',
         'homeServer'    => $Kolab::config{'dirserv_home_server'},
@@ -229,11 +229,11 @@ sub handleNotifications
         next if $folder =~ /^\./;
         $imap->select($folder);
 
-        my @messagelist = $imap->search('UNDELETED');    
+        my @messagelist = $imap->search('UNDELETED');
         foreach my $message (@messagelist) {
             my $data = $imap->message_string($message);
             warn "Empty message data for $folder/$message" unless defined $data && length $data;
-            
+
             $parser->output_under("/tmp");
             my $entity = $parser->parse_data($data);
             my $subject = $entity->head->get('Subject',0);
@@ -259,10 +259,10 @@ sub handleNotifications
                     $cn = trim($cn);
                     $cn = "cn=$cn".",cn=external,".$Kolab::config{'base_dn'};
                     $entry->dn($cn);
-                                 
+
                     if ( !$ldif->error() ) {
-		        scrubEntry(\$entry);                
-                        
+		        scrubEntry(\$entry);
+
                         my $result = $entry->update($ldap);
                         $result->code && warn "failed to add entry: ", $result->error ;
                     }
@@ -274,13 +274,13 @@ sub handleNotifications
 #                 my ($name,$fh);
 #                 my $part = $entity->parts(0);
 #                 my $bodyh = $part->bodyhandle;
-#                 
+#
 #                 $fh = IO::File->new_tmpfile;
 #                 return 0 if !defined $fh;
-# 
+#
 #                 $bodyh->print(\*$fh);
 #                 seek($fh,0,0);
-# 
+#
 #                 my $ldif = Net::LDAP::LDIF->new( $fh, "r", onerror => 'undef' );
 #                 while ( not $ldif->eof() ) {
 #                     my $entry = $ldif->read_entry();
@@ -289,7 +289,7 @@ sub handleNotifications
 #                     $cn = "cn=$cn".",cn=external,".$Kolab::config{'base_dn'};
 #                     $entry->dn($cn);
 #                     $entry->changetype('modify');
-#                                  
+#
 #                     if ( !$ldif->error() ) {
 #                         foreach my $attr ($entry->attributes) {
 #                             #print $attr,"\n";
@@ -299,8 +299,8 @@ sub handleNotifications
 #                             #print join("\n ",$attr, $entry->get_value($attr)),"\n";
 #                         }
 #                         my $result = $entry->update($ldap);
-#                         if ($result->code) { 
-#                                 warn "failed to add entry: ", $result->error ; 
+#                         if ($result->code) {
+#                                 warn "failed to add entry: ", $result->error ;
 #                             $entry->changetype('add');
 #                             $result = $entry->update($ldap);
 #                             $result->code && warn "failed to add entry: ", $result->error ;
@@ -328,13 +328,13 @@ sub handleNotifications
                     $cn = "cn=$cn".",cn=external,".$Kolab::config{'base_dn'};
                     $entry->dn($cn);
                     $entry->changetype('modify');
-                                 
+
                     if ( !$ldif->error() ) {
-		        scrubEntry(\$entry);                
-                        
+		        scrubEntry(\$entry);
+
 			my $result = $entry->update($ldap);
-                        if ($result->code) { 
-                             warn "failed to modify entry, trying to add : ", $result->error ; 
+                        if ($result->code) {
+                             warn "failed to modify entry, trying to add : ", $result->error ;
                              $entry->changetype('add');
                              $result = $entry->update($ldap);
                              $result->code && warn "failed to add entry: ", $result->error ;
@@ -369,7 +369,7 @@ sub handleNotifications
                 my ($name,$fh);
                 my $part = $entity->parts(0);
                 my $bodyh = $part->bodyhandle;
-                
+
                 $fh = IO::File->new_tmpfile;
                 return 0 if !defined $fh;
 
@@ -384,9 +384,9 @@ sub handleNotifications
                     $cn = "cn=$cn".",cn=external,".$Kolab::config{'base_dn'};
                     $entry->dn($cn);
                     $entry->changetype('delete');
-                                 
+
                     if ( !$ldif->error() ) {
-		        scrubEntry(\$entry);                
+		        scrubEntry(\$entry);
                         my $result = $entry->update($ldap);
                         $result->code && warn "failed to delete entry: ", $result->error ;
                     }
@@ -394,8 +394,8 @@ sub handleNotifications
                 $fh->close();
 
             }
-            
-            
+
+
         }
         $imap->set_flag("Deleted",@messagelist);
         $imap->close or die "Could not close :$folder\n";
@@ -415,18 +415,18 @@ __END__
 
 =head1 NAME
 
-Kolab::DirServ - A Perl Module that handles Address book 
+Kolab::DirServ - A Perl Module that handles Address book
 synchronisation between Kolab servers.
 
 =head1 SYNOPSIS
 
   use Kolab::DirServ;
   use Net::LDAP::Entry;
- 
+
   #send notification of a new mailbox
   $entry = Net::LDAP::Entry->new(...);
   &notify_new_alias( $entry );
-  
+
   #handle updates recieved
   &handle_notifications( "address", "IMAP User", "User Password" );
 
@@ -436,40 +436,40 @@ synchronisation between Kolab servers.
   publish address book data to a list of peers. These peers recieve
   notification of new, updated and removed mailboxes and update their
   address books accordingly.
-  
+
 =head1 DESCRIPTION
 
 The Kolab::DirServ module recieves Net::LDAP::Entry entries, converts
-them to LDIF format and sends them to a list of mailboxes in LDIF 
+them to LDIF format and sends them to a list of mailboxes in LDIF
 format.
 The list of peers and other configuration parameters is provided
-through the Kolab::DirServ::Config module. 
+through the Kolab::DirServ::Config module.
 
 =head2 EXPORT
-    
+
   &notify_new_alias( $entry )
 
     Recieves a Net::LDAP::Entry object.
     Send a new alias notification to each of the address book peers in
     a LDIF MIME attachment.
-  
+
   &notify_remove_alias( $entry )
- 
+
     Recieves a Net::LDAP::Entry object.
     Send a notification to each of the address book peers to remove an
     entry from their address books.
-  
+
   &notify_modify_alias( $entry )
 
     Recieves a Net::LDAP::Entry object.
     Send updated information to each of the address book peers. Each
-    peer then updates the corresponding address book entry with the 
+    peer then updates the corresponding address book entry with the
     updated information.
 
   &handle_notifications( $server, $user, $password )
 
     Connects to specified IMAP server and retrieves all messages from
-    the specified mailbox. The messages are cleared from the mailbox 
+    the specified mailbox. The messages are cleared from the mailbox
     after they are handled. This process runs periodically on a peer.
 
 =head1 SEE ALSO
@@ -484,13 +484,13 @@ Stephan Buys, s.buys@codefusion.co.za
 
 Please report any bugs, or post any suggestions, to the kolab-devel
 mailing list <kolab-devel@lists.intevation.de>.
-       
+
 
 =head1 COPYRIGHT AND LICENSE
 
 Copyright 2003 by Stephan Buys
 
 This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself. 
+it under the same terms as Perl itself.
 
 =cut

@@ -1,11 +1,17 @@
-Kolab/DirServ version 0.9
-=============-============
+Kolab-DirServ version 0.01
+==========================
 
-The Kolab::DirServ module provides a mechanism for Kolab servers to
-publish address book data to a list of peers. These peers recieve
-notification of new, updated and removed mailboxes and update their
-address books accordingly.
-  
+The README is used to introduce the module and provide instructions on
+how to install the module, any machine dependencies it may have (for
+example C compilers and installed libraries) and any other information
+that should be provided before the module is installed.
+
+A README file is required for CPAN modules since CPAN extracts the
+README file from a module distribution so that people browsing the
+archive can use it get an idea of the modules uses. It is usually a
+good idea to provide version information here so that people can
+decide whether fixes for the module are worth downloading.
+
 INSTALLATION
 
 To install this module type the following:
@@ -19,36 +25,16 @@ DEPENDENCIES
 
 This module requires these other modules and libraries:
 
-  Kolab::DirServ::Config
-  Kolab::Config
-  Kolab::Util
-  MIME::Entity
-  MIME::Parser
-  MIME::Body
-  Net::LDAP
-  Net::LDAP::LDIF
-  Net::LDAP::Entry
-  Mail::IMAPClient
-  URI
-  IO::File
-  POSIX 
+  blah blah blah
 
 COPYRIGHT AND LICENCE
 
-Copyright (c) 2003  Code Fusion cc
-Writen by Stephan Buys <s.buys@codefusion.co.za>
+Put the correct copyright and licence information here.
 
-This  program is free  software; you can redistribute  it and/or
-modify it  under the terms of the GNU  General Public License as
-published by the  Free Software Foundation; either version 2, or
-(at your option) any later version.
+Copyright (C) 2004 by A. U. Thor
 
-This program is  distributed in the hope that it will be useful,
-but WITHOUT  ANY WARRANTY; without even the  implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-General Public License for more details.
-
-You can view the  GNU General Public License, online, at the GNU
-Project's homepage; see <http://www.gnu.org/licenses/gpl.html>.
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself, either Perl version 5.8.3 or,
+at your option, any later version of Perl 5 you may have available.
 
 
